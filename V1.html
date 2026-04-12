@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ocean Dreams | Cruise Hotel</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{--azul:#0f4c81;--amarillo:#f4c542;--oscuro:#0a1f33;--celeste:#00AEEF}
+body{margin:0;font-family:Poppins;background:var(--oscuro);color:white;padding-top:70px}
+
+.navbar{position:fixed;top:0;width:100%;height:70px;display:flex;align-items:center;padding:0 30px;background:rgba(0,0,0,.8);backdrop-filter:blur(10px);z-index:1000}
+.logo{font-weight:600; font-size: 1.2rem; cursor: pointer;}
+.menu{margin-left:auto;display:flex;gap:15px}
+.menu div{cursor:pointer;padding:8px 12px;border-radius:10px; font-size: 0.9rem}
+.menu div:hover{background:rgba(255,255,255,0.1)}
+
+.section{display:none;padding:60px 20px;max-width:1200px;margin:auto}
+.section.active{display:block}
+
+/* HERO */
+.hero{
+  height:80vh;
+  background: linear-gradient(rgba(10,31,51,0.4), rgba(10,31,51,0.8)), url('https://images.unsplash.com/photo-1548574505-5e239809ee19?auto=format&fit=crop&w=1350&q=80');
+  background-size: cover;
+  background-position: center;
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 0 0 50px 50px;
+}
+.hero-content h1{font-size:3.5rem;margin:0; text-transform: uppercase; letter-spacing: 4px}
+.hero p{font-size:1.2rem; font-style: italic; color: #ddd}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px; margin-top: 30px}
+
+.card{border-radius:20px;overflow:hidden;cursor:pointer;transition:.4s;background:#162a3d;position:relative; border: 1px solid #1e3a5a}
+.card:hover{transform:scale(1.03); border-color: var(--amarillo)}
+.card img{width:100%;height:200px;object-fit:cover}
+.card-info{padding: 15px}
+.card-info h3{margin: 0; color: var(--amarillo)}
+
+/* ORGANIGRAMA ESTILIZADO */
+.equipo-container {
+    background: #112233;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 30px;
+}
+.role-boss { background: var(--amarillo); color: black; padding: 15px; border-radius: 10px; font-weight: bold; margin-bottom: 30px; display: inline-block; width: 250px; }
+.sub-levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+.role { background: #1e3a5a; padding: 15px; border-radius: 10px; border-left: 4px solid var(--celeste); font-size: 0.85rem; }
+.role span { display: block; color: var(--celeste); font-size: 0.7rem; text-transform: uppercase; margin-bottom: 5px; }
+
+/* MODAL */
+.full{position:fixed;inset:0;background:var(--oscuro);display:none;flex-direction:column;overflow:auto;z-index:2000}
+.full.active{display:flex}
+.full img{width:100%;height:350px;object-fit:cover}
+.full-content{padding:40px; max-width: 800px; margin: auto}
+.close{cursor:pointer;padding:20px; font-weight: bold; color: var(--amarillo)}
+.price-tag{background: var(--amarillo); color: black; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-top: 10px; font-weight: bold}
+
+footer{text-align:center;padding:40px; color: #666; font-size: 0.8rem}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+<div class="logo" onclick="showSection('inicio')">Ocean Dreams</div>
+<div class="menu">
+<div onclick="showSection('inicio')">Inicio</div>
+<div onclick="showSection('habitaciones')">Habitaciones</div>
+<div onclick="showSection('restaurantes')">Restaurantes</div>
+<div onclick="showSection('actividades')">Entretenimiento</div>
+<div onclick="showSection('equipo')">Equipo</div>
+</div>
+</div>
+
+<div id="inicio" class="section active">
+<div class="hero">
+<div class="hero-content">
+<h1>Ocean Dreams</h1>
+<p>"Navega hacia tus mejores recuerdos"</p>
+</div>
+</div>
+
+<div style="margin-top: 50px; text-align: center;">
+    <h2>Nuestra Esencia</h2>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+        <div>🌊 Olas: Libertad</div>
+        <div>☀️ Sol: Energía</div>
+        <div>🌴 Palmeras: Triunfo</div>
+        <div>⚓ Crucero: Descanso</div>
+    </div>
+</div>
+</div>
+
+<div id="habitaciones" class="section">
+<h2>Nuestras Habitaciones</h2>
+<p>200 habitaciones diseñadas para tu confort y elegancia.</p>
+<div class="grid">
+<div class="card" onclick="openFull('estandar')">
+    <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39">
+    <div class="card-info"><h3>Rincón del Sol</h3><p>Estándar y confortable</p></div>
+</div>
+<div class="card" onclick="openFull('matrimonial')">
+    <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a">
+    <div class="card-info"><h3>Costa Serena</h3><p>Matrimonial con balcón</p></div>
+</div>
+<div class="card" onclick="openFull('suite')">
+    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b">
+    <div class="card-info"><h3>Suite Sol Doré</h3><p>Lujo y Mayordomo VIP</p></div>
+</div>
+</div>
+</div>
+
+<div id="restaurantes" class="section">
+<h2>Experiencia Gastronómica</h2>
+<div class="grid">
+<div class="card" onclick="openFull('italiano')">
+    <img src="https://images.unsplash.com/photo-1555992336-03a23c7b20ee">
+    <div class="card-info"><h3>Vento Di Mare</h3><p>Sabores de Italia</p></div>
+</div>
+<div class="card" onclick="openFull('japones')">
+    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c">
+    <div class="card-info"><h3>Ikigai</h3><p>Tradición Japonesa</p></div>
+</div>
+</div>
+</div>
+
+<div id="actividades" class="section">
+<h2>Entretenimiento y Servicios</h2>
+<div class="grid">
+<div class="card" onclick="openFull('acuario')">
+    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5">
+    <div class="card-info"><h3>Acuario Interactivo</h3><p>Entrada Libre</p></div>
+</div>
+<div class="card" onclick="openFull('piscina')">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+    <div class="card-info"><h3>Fiesta en la Piscina</h3><p>Viernes de DJ</p></div>
+</div>
+<div class="card" onclick="openFull('alojamiento')">
+    <img src="https://images.unsplash.com/photo-1521783593447-5702b9bfd267">
+    <div class="card-info"><h3>Servicio al Huésped</h3><p>Housekeeping y Concierge</p></div>
+</div>
+</div>
+</div>
+
+<div id="equipo" class="section">
+    <h2 style="text-align:center">Nuestro Equipo</h2>
+    <div class="equipo-container">
+        <div class="role-boss">DIRECTOR GENERAL</div>
+        <div class="sub-levels">
+            <div class="role"><span>Alimentos y Bebidas</span>GERENTE DE A&B</div>
+            <div class="role"><span>Housekeeping</span>AMA DE LLAVES EJECUTIVA</div>
+            <div class="role"><span>Front Desk</span>JEFE DE RECEPCIÓN</div>
+            <div class="role"><span>Mantenimiento</span>JEFE DE MANTENIMIENTO</div>
+        </div>
+    </div>
+</div>
+
+<div id="full" class="full">
+<div class="close" onclick="closeFull()">✕ CERRAR</div>
+<img id="modal-img">
+<div class="full-content">
+<h1 id="title" style="color: var(--amarillo); margin-bottom: 5px"></h1>
+<div id="price" class="price-tag"></div>
+<div id="desc" style="white-space: pre-wrap; margin-top: 20px; line-height: 1.8"></div>
+</div>
+</div>
+
+<footer>
+    Ocean Dreams CRUISE HOTEL © 2026<br>
+</footer>
+
+<script>
+function showSection(id){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo(0,0);
+}
+
+function openFull(tipo){
+ const data={
+  estandar:{
+    img:'https://images.unsplash.com/photo-1618773928121-c32242e63f39',
+    t:'Habitación Rincón del Sol',
+    p:'Desde $7,200 MXN / $420 USD por persona',
+    d:'• Espacio compacto y confortable con baño privado.\n• Climatización y limpieza diaria.\n• Incluye desayuno, comida y cena buffet.\n• Acceso a piscinas, gimnasio y shows en vivo.'
+  },
+  matrimonial:{
+    img:'https://images.unsplash.com/photo-1566665797739-1674de7a421a',
+    t:'Habitación Costa Serena',
+    p:'$12,000 – $18,000 MXN',
+    d:'• Ventana o balcón privado con vista al mar.\n• Servicio a la habitación las 24 horas.\n• Actividades exclusivas: cenas románticas y spa básico.\n• Paquetes preferenciales en restaurantes de especialidad.'
+  },
+  suite:{
+    img:'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b',
+    t:'Suite Sol Doré',
+    p:'Categoría de Lujo',
+    d:'• Amplia sala y balcón panorámico.\n• Mayordomo privado y prioridad en embarque.\n• Acceso a áreas VIP, jacuzzis y spas exclusivos.\n• Experiencias gastronómicas personalizadas.'
+  },
+  italiano:{
+    img:'https://images.unsplash.com/photo-1555992336-03a23c7b20ee',
+    t:'Restaurante Vento Di Mare',
+    p:'Especialidad: Italiana',
+    d:'PLATILLOS FUERTES:\n- Lasaña de carne y Pasta a la boloñesa.\n- Pizza Margarita y Fettuccine Alfredo.\nPOSTRES: Tiramisú, Gelato y Cannoli.\nBAR: Vino tinto/blanco, Aperol Spritz y Negroni.'
+  },
+  japones:{
+    img:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c',
+    t:'Restaurante Ikigai',
+    p:'Calidad Superior',
+    d:'ENTRADAS: Sopa miso, Gyozas y Edamame.\nPLATILLOS FUERTES:\n- Sushi variado y Ramen clásico.\n- Pollo teriyaki y Yakisoba.\nPOSTRES: Mochis, Dorayaki y Helado de té verde.'
+  },
+  acuario:{
+    img:'https://images.unsplash.com/photo-1544551763-46a013bb70d5',
+    t:'Acuario Interactivo',
+    p:'10:00 am – 5:00 pm (Libre)',
+    d:'• Observación de especies marinas.\n• Actividades de Pintacaritas ($50 MXN).\n• Juegos recreativos para toda la familia.'
+  },
+  piscina:{
+    img:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
+    t:'Fiesta en la Piscina',
+    p:'Viernes: 8:00 pm – 12:30 pm',
+    d:'• DJ y Animación en vivo.\n• Acceso incluido (Entrada general).\n• Zona VIP disponible por $200 MXN.'
+  },
+  alojamiento:{
+    img:'https://images.unsplash.com/photo-1521783593447-5702b9bfd267',
+    t:'Servicio de Alojamiento',
+    p:'Recepción 24 Horas',
+    d:'• Check-in: 3:00 pm | Check-out: 12:00 pm.\n• Early check-in disponible ($300 MXN).\n• Persona extra en habitación: $500 MXN.\n• Servicios de Concierge y Housekeeping.'
+  }
+ };
+
+ document.getElementById('modal-img').src=data[tipo].img;
+ document.getElementById('title').innerText=data[tipo].t;
+ document.getElementById('price').innerText=data[tipo].p;
+ document.getElementById('desc').innerText=data[tipo].d;
+ document.getElementById('full').classList.add('active');
+}
+
+function closeFull(){
+ document.getElementById('full').classList.remove('active');
+}
+</script>
+
+</body>
+</html>
